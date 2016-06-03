@@ -1,0 +1,29 @@
+<div class="page-header">
+
+
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover ">
+        {% if images is not none %}
+        {% for image in images %}
+        <tr>
+
+            <td>
+
+                <a>{{ image.articles.article_link }}</a>
+            </td>
+            <td>
+                <a>{{ image.image_link }}</a>
+
+            </td>
+
+
+        </tr>
+
+        {% endfor %}
+        {% endif %}
+    </table>
+</div>
+
+
