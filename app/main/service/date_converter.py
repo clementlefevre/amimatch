@@ -1,6 +1,7 @@
 import datetime
-from flask import flash
+
 from sqlalchemy.exc import IntegrityError
+
 from app import db
 
 __author__ = 'ramon'
@@ -8,9 +9,10 @@ __author__ = 'ramon'
 import re
 
 
-def update_article(article):
-    article.date = date_converter(article.article_date)
-    persist_date(article)
+def update_article(articles):
+    for article in articles:
+        article.date = date_converter(article.article_date)
+    persist_date(articles)
 
 
 def date_converter(url):
@@ -21,10 +23,10 @@ def date_converter(url):
     return datetime.date(*date)
 
 
-def persist_date(article):
+def persist_date(articles):
     try:
-        db.session.add(article)
+        db.session.bulk_save_objects(articles)
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
-        print('Could not save this article : id:{} : url:{}'.format(article.id, article.article_link))
+        print('Could not save those articles')

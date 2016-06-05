@@ -1,12 +1,11 @@
-import pdb
 from flask import render_template, abort, request, \
     current_app
 from flask.ext.sqlalchemy import get_debug_queries
 
 from . import main
-import ipdb as ipdb
-from app.main.helper.date_converter import update_article
-from app.models import Image, User, Article
+from app.main.forms import DateRangeForm
+from app.main.service.images_service import find_images
+from app.models import User
 
 
 @main.after_app_request
@@ -43,12 +42,12 @@ def index():
     return render_template('index.html')
 
 
-@main.route('/images', methods=['GET', 'POST'])
-def all_images():
-    # images = Image.query.filter(Image.image_caption.contains('min')).all()
-    # pattern = http://www.morgenpost.de/printarchiv/nachrichten-vom-15-1-2014
-    articles = Article.query.all()
-    for article in articles:
-        update_article(article)
-    ipdb.set_trace()
-    return render_template('images.html', images=articles)
+@main.route('/search_images', methods=['GET', 'POST'])
+def search_images():
+    form = DateRangeForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        images = find_images(form.date_from, form.date_to)
+        return render_template('images.html', images=images)
+
+    return render_template('search_images.html', form=form)

@@ -227,7 +227,7 @@ class Article(db.Model):
     article_title = db.Column('article_title', db.String, nullable=True)
     article_link = db.Column('article_link', db.String, nullable=True)
     article_date = db.Column('article_date', db.String, nullable=True)
-    date = db.Column(db.DATE, nullable=True)
+    date = db.Column('date', db.DATE, nullable=True)
     images = db.relationship("Image", backref='articles', lazy='dynamic')
 
 

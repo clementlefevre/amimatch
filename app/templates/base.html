@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('main.all_images') }}">Vote</a></li>
+                <li><a href="{{ url_for('main.search_images') }}">Search Images</a></li>
 
                 <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
                 {% endif %}

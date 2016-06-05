@@ -1,9 +1,10 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, TextAreaField, BooleanField, SelectField, \
-    SubmitField
-from wtforms.validators import Required, Length, Email, Regexp
+from wtforms import SubmitField
+from wtforms.fields.html5 import DateField
 
 
-class NameForm(Form):
-    name = StringField('What is your name?', validators=[Required()])
-    submit = SubmitField('Submit')
+class DateRangeForm(Form):
+    date_from = DateField('DatePicker', format='%Y-%m-%d')
+    date_to = DateField('DatePicker', format='%Y-%m-%d')
+
+    submit = SubmitField('Search images')
