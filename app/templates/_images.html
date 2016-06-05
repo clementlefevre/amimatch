@@ -1,8 +1,8 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %} Restaurants{% endblock %}
-
+{% block title %} Images results : {% endblock %}
+{{images|length}}
 {% block page_content %}
 <div class="page-header">
 
@@ -16,12 +16,23 @@
         {% for image in images %}
         <tr>
 
-            <td>
 
-                <a>{{ image.articles.article_link }}</a>
+            <td>
+                {{ image.articles.date }}
             </td>
             <td>
-                <a>{{ image.image_link }}</a>
+                {{ image.image_caption }}
+            </td>
+            <td>
+
+                <a>{{ image.articles.article_title }}</a>
+            </td>
+            <td>
+                <a href={{ image.image_link }}>
+                    <img src={{ image.image_link }} alt="Smiley face" height="42"
+                         width="42">
+                </a>
+
 
             </td>
 

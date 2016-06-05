@@ -47,7 +47,7 @@ def search_images():
     form = DateRangeForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        images = find_images(form.date_from, form.date_to)
+        images = find_images(form)
         return render_template('images.html', images=images)
 
     return render_template('search_images.html', form=form)
