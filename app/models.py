@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import json
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -230,6 +231,18 @@ class Article(db.Model):
     date = db.Column('date', db.DATE, nullable=True)
     images = db.relationship("Image", backref='articles', lazy='dynamic')
 
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['_sa_instance_state']
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
 
 class Image(db.Model):
     __tablename__ = "images"
@@ -237,3 +250,16 @@ class Image(db.Model):
     image_link = db.Column('image_link', db.String)
     image_caption = db.Column('image_caption', db.String)
     article_id = db.Column(db.String, db.ForeignKey('articles.id'))
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['_sa_instance_state']
+
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)

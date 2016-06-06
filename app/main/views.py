@@ -1,10 +1,14 @@
+import json
+
 from flask import render_template, abort, request, \
     current_app
+from flask.ext.login import login_required
+
 from flask.ext.sqlalchemy import get_debug_queries
 
 from . import main
 from app.main.forms import DateRangeForm
-from app.main.service.images_service import find_images
+from app.main.service.images_service import find_images, find_images_by_name
 from app.models import User
 
 
@@ -38,11 +42,19 @@ def user(username):
 
 
 @main.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
-    return render_template('index.html')
+    return render_template('index2.html')
+
+
+@main.route('/images/<string:name>', methods=['GET'])
+def all_images(name):
+    result = json.dumps(find_images_by_name(name))
+    return result
 
 
 @main.route('/search_images', methods=['GET', 'POST'])
+@login_required
 def search_images():
     form = DateRangeForm(request.form)
 
