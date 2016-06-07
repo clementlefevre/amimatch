@@ -3,11 +3,13 @@ import json
 from flask import render_template, abort, request, \
     current_app
 from flask.ext.login import login_required
+from flask.ext.restful import Resource
 from flask.ext.sqlalchemy import get_debug_queries
 
 from . import main
+from app import api
 from app.main.forms import DateRangeForm
-from app.main.service.images_service import find_images, find_images_by_name
+from app.main.service.images_service import find_images
 from app.models import User
 
 
@@ -46,10 +48,19 @@ def index():
     return render_template('index.html')
 
 
-@main.route('/images/<string:name>', methods=['GET'])
-def all_images(name):
-    result = json.dumps(find_images_by_name(name))
-    return result
+@main.route('/images/', methods=['POST'])
+def get_images():
+    if not request.json or 'caption' not in request.json:
+        abort(400)
+    images_request = {
+        'caption': request.json['caption'],
+        'date_from': request.json['date_from'],
+        'date_to': request.json['date_to']
+    }
+
+    results = find_images(images_request)
+
+    return json.dumps(results), 200
 
 
 @main.route('/search_images', methods=['GET', 'POST'])
@@ -62,3 +73,17 @@ def search_images():
         return render_template('images.html', images=images)
 
     return render_template('search_images.html', form=form)
+
+
+class UserAPI(Resource):
+    def get(self, id):
+        pass
+
+    def put(self, id):
+        pass
+
+    def delete(self, id):
+        pass
+
+
+api.add_resource(UserAPI, '/users/<int:id>', endpoint='user')

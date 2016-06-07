@@ -5,13 +5,17 @@ from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.pagedown import PageDown
+from flask.ext.restful import Api, Resource
 from config import config
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+api = Api()
 pagedown = PageDown()
+
+
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'

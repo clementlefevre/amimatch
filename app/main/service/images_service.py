@@ -1,5 +1,7 @@
 import calendar
 
+from dateutil import parser
+
 from sqlalchemy import func
 
 from app import db
@@ -9,8 +11,10 @@ __author__ = 'ramon'
 
 
 def find_images(form):
-    fromDate = form.date_from.data
-    toDate = form.date_to.data
+    fromDate = parser.parse(form['date_from'])
+    toDate = parser.parse(form['date_to'])
+
+    caption = form['caption']
     # ipdb.set_trace()
     images = []
 
@@ -22,10 +26,12 @@ def find_images(form):
     #         images.extend(found_images)
     images = db.session.query(Image).join(Article, Article.id == Image.article_id).filter(Article.date >= fromDate,
                                                                                           Article.date <= toDate).filter(
-        Image.image_caption.contains(form.author.data)).group_by(
+        func.lower(Image.image_caption).contains(caption.lower())).group_by(
         Image.image_hash).all()
 
-    return images
+    result = [jsonify(image) for image in images]
+
+    return result
 
 
 def find_images_by_name(name):

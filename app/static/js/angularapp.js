@@ -1,5 +1,5 @@
 //
-var exampleApp = angular.module('exampleApp', ['ngRoute', 'LocalStorageModule']);
+var exampleApp = angular.module('exampleApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'LocalStorageModule']);
 
 exampleApp.config(function ($routeProvider, $httpProvider, localStorageServiceProvider) {
 
