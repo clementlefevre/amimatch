@@ -9,16 +9,14 @@
         <th class="col-md-2">Article</th>
         <th class="col-md-2">Caption</th>
         <th class="col-md-2">Pic</th>
-        <!--<th class="col-md-1" ng-click="changeSorting('activeSites')"><i
-                class="fa fa-sort"></i>Number of active sites
-        </th>-->
+
 
         </thead>
         <div>
 
             <tbody>
             <tr ng-repeat="image in images  |orderBy:sort.column:sort.descending"
-                ng-class="{warning:customer.name.indexOf('Trunk')>-1}">
+                    >
 
                 <td>
                     <div>

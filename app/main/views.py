@@ -3,7 +3,6 @@ import json
 from flask import render_template, abort, request, \
     current_app
 from flask.ext.login import login_required
-
 from flask.ext.sqlalchemy import get_debug_queries
 
 from . import main
@@ -44,7 +43,7 @@ def user(username):
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index2.html')
+    return render_template('index.html')
 
 
 @main.route('/images/<string:name>', methods=['GET'])
