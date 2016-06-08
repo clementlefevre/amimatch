@@ -15,6 +15,8 @@ exampleApp.controller('search_imagesController', function ($rootScope, $scope, $
 
         $http.post('images/', search).success(function (data) {
             $scope.images = data;
+            $scope.rowCollection = data;
+            $scope.itemsByPage = 15;
         }).error(function (data, status) {
             alert("Search error. Please try again or contact administrator.");
             return status;

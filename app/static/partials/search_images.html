@@ -1,133 +1,170 @@
-<form class="page-header">
+<form novalidate class="simple-form">
+    <div ng-if="rowCollection.length>0">
+
+        <table st-table="rowCollection" class="table table-striped">
+            <thead>
+            <tr>
+                <th st-sort="firstName">first name</th>
+                <th st-sort="lastName">last name</th>
+                <th st-sort="birthDate">birth date</th>
+                <th st-sort="balance">balance</th>
+                <th>email</th>
+            </tr>
+            <tr>
+                <th>
+                    <input st-search="'firstName'" placeholder="search for firstname" class="input-sm form-control"
+                           type="search"/>
+                </th>
+                <th colspan="4">
+                    <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in rowCollection">
+                <td>{{row.date | uppercase}}</td>
+                <td>{{row.article_url}}</td>
+                <td>{{row.date | date}}</td>
+                <td>{{row.image_caption}}</td>
+
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
 
 
-    <form novalidate class="simple-form">
+    <div>
 
 
-        <div>
+        <!-- Single button -->
 
 
-            <!-- Single button -->
-
-
-            <div class="row">
-                <div class="col-md-2">
-                    <div>
-                        <label>Caption</label>
-                        <input type="text" name="caption" class="form-control"
-                               ng-model="search.caption"
-                               required
-                                >
-                    </div>
-
+        <div class="row">
+            <div class="col-md-2">
+                <div>
+                    <label>Caption</label>
+                    <input type="text" name="caption" class="form-control"
+                           ng-model="search.caption"
+                           required
+                            >
                 </div>
-                <div class="col-md-2">
-                    <label>From</label>
 
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                               ng-model="search.date_from"
-                               is-open="open_from.opened" datepicker-options="dateOptions" ng-required="true"
-                               close-text="Close" alt-input-formats="altInputFormats"/>
+            </div>
+            <div class="col-md-2">
+                <label>From</label>
+
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                           ng-model="search.date_from"
+                           is-open="open_from.opened" datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close" alt-input-formats="altInputFormats"/>
           <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="open_from()"><i
                       class="glyphicon glyphicon-calendar"></i></button>
           </span>
-                    </p>
-                </div>
+                </p>
+            </div>
 
-                <div class="col-md-2">
-                    <label>To</label>
+            <div class="col-md-2">
+                <label>To</label>
 
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                               ng-model="search.date_to"
-                               is-open="open_to.opened" datepicker-options="dateOptions" ng-required="true"
-                               close-text="Close" alt-input-formats="altInputFormats"/>
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                           ng-model="search.date_to"
+                           is-open="open_to.opened" datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close" alt-input-formats="altInputFormats"/>
           <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="open_to()"><i
                       class="glyphicon glyphicon-calendar"></i></button>
           </span>
-                    </p>
-                </div>
-
-                <div class="col-md-2">
-
-                    <button type="submit" class="btn btn-primary"
-                            ng-click="search_images(search)">Search
-                    </button>
-
-                    Found : {{images.length}} matching pictures.
-
-                </div>
+                </p>
             </div>
 
+            <div class="col-md-2">
 
-            <hr/>
+                <button type="submit" class="btn btn-primary"
+                        ng-click="search_images(search)">Search
+                </button>
 
+                Found : {{images.length}} matching pictures.
+
+            </div>
         </div>
 
 
-    </form>
+        <hr/>
 
-
-    <table class="table-striped table">
-        <thead class="panel-title">
-        <th class="col-md-1" ng-click="changeSorting('date')"><i
-                class="fa fa-sort"></i>Date
-        </th>
-        <th class="col-md-2">Article</th>
-        <th class="col-md-2">Caption</th>
-        <th class="col-md-2">Pic</th>
-
-
-        </thead>
-        <div>
-
-            <tbody>
-            <tr ng-repeat="image in images  |orderBy:sort.column:sort.descending"
-                    >
-
-                <td>
-                    <div>
-                        <strong> {{image.date | date:'dd/MM/yyyy'}}</strong>
-                    </div>
-                </td>
-
-                <td>
-                    <div><a href={{image.article_url}} target="_blank">
-                        <strong>
-                            {{image.article_url}}</strong>
-                    </a>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <strong> {{image.image_caption}}</strong>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <a href={{image.image_url}} target="_blank">
-                            <img ng-src={{image.image_url}} alt="Description" height="42"
-                                 width="42" target="_blank"/>
-                        </a>
-                    </div>
-                </td>
-
-
-                <!--   <td>{{customer.activeSites}}</td>-->
-
-
-            </tr>
-
-
-            </tbody>
-        </div>
-    </table>
-
-    <p class="alert alert-info" ng-if="images.length == 0">
-        No images found for this Search.
-    </p>
     </div>
+
+
+</form>
+
+
+<table class="table-striped table">
+    <thead class="panel-title">
+    <th class="col-md-1" ng-click="changeSorting('date')"><i
+            class="fa fa-sort"></i>Date
+    </th>
+    <th class="col-md-2">Article</th>
+    <th class="col-md-2">Caption</th>
+    <th class="col-md-2">Pic</th>
+
+
+    </thead>
+    <div>
+
+        <tbody>
+        <tr ng-repeat="image in images  |orderBy:sort.column:sort.descending"
+                >
+
+            <td>
+                <div>
+                    <strong> {{image.date | date:'dd/MM/yyyy'}}</strong>
+                </div>
+            </td>
+
+            <td>
+                <div><a href={{image.article_url}} target="_blank">
+                    <strong>
+                        {{image.article_url}}</strong>
+                </a>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <strong> {{image.image_caption}}</strong>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <a href={{image.image_url}} target="_blank">
+                        <img ng-src={{image.image_url}} alt="Description" height="42"
+                             width="42" target="_blank"/>
+                    </a>
+                </div>
+            </td>
+
+
+            <!--   <td>{{customer.activeSites}}</td>-->
+
+
+        </tr>
+
+
+        </tbody>
+    </div>
+</table>
+
+<p class="alert alert-info" ng-if="images.length == 0">
+    No images found for this Search.
+</p>
+
+
 
