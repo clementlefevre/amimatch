@@ -53,4 +53,3 @@ WTForms==2.1
 WTForms-Components==0.10.0
 Flask-SSLify==0.1.4
 gunicorn==18.0
-psycopg2==2.5.1
