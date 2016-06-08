@@ -1,1 +1,1 @@
-web: gunicorn image_matcher_gui.wsgi
+web: gunicorn manage:app
