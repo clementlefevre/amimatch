@@ -48,6 +48,9 @@ def index():
     return render_template('index.html')
 
 
+
+
+
 @main.route('/images/', methods=['POST'])
 def get_images():
     if not request.json or 'caption' not in request.json:
