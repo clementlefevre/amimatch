@@ -1,43 +1,4 @@
 <form novalidate class="simple-form">
-    <div ng-if="rowCollection.length>0">
-
-        <table st-table="rowCollection" class="table table-striped">
-            <thead>
-            <tr>
-                <th st-sort="firstName">first name</th>
-                <th st-sort="lastName">last name</th>
-                <th st-sort="birthDate">birth date</th>
-                <th st-sort="balance">balance</th>
-                <th>email</th>
-            </tr>
-            <tr>
-                <th>
-                    <input st-search="'firstName'" placeholder="search for firstname" class="input-sm form-control"
-                           type="search"/>
-                </th>
-                <th colspan="4">
-                    <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="row in rowCollection">
-                <td>{{row.date | uppercase}}</td>
-                <td>{{row.article_url}}</td>
-                <td>{{row.date | date}}</td>
-                <td>{{row.image_caption}}</td>
-
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
 
 
     <div>
@@ -93,7 +54,7 @@
                         ng-click="search_images(search)">Search
                 </button>
 
-                Found : {{images.length}} matching pictures.
+                <div ng-if="rowCollection.length>0">Found : <strong>{{images.length}} </strong>matching pictures.</div>
 
             </div>
         </div>
@@ -107,61 +68,56 @@
 </form>
 
 
-<table class="table-striped table">
-    <thead class="panel-title">
-    <th class="col-md-1" ng-click="changeSorting('date')"><i
-            class="fa fa-sort"></i>Date
-    </th>
-    <th class="col-md-2">Article</th>
-    <th class="col-md-2">Caption</th>
-    <th class="col-md-2">Pic</th>
+<div ng-if="rowCollection.length>0">
+
+    <table st-table="rowCollection" class="table table-striped">
+        <thead>
+        <tr>
+            <th st-sort="date">Date
+            </th>
+            <th st-sort="image_url">Pic</th>
+            <th st-sort="article_url">Article</th>
+            <th st-sort="image_caption">Caption
+            </th>
 
 
-    </thead>
-    <div>
+        </tr>
+        <tr>
 
+            <th colspan="4">
+                <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+            </th>
+        </tr>
+        </thead>
         <tbody>
-        <tr ng-repeat="image in images  |orderBy:sort.column:sort.descending"
-                >
-
-            <td>
-                <div>
-                    <strong> {{image.date | date:'dd/MM/yyyy'}}</strong>
+        <tr ng-repeat="row in rowCollection">
+            <td>{{row.date | date}}</td>
+            <td class="thumbnail">
+                <div class="image">
+                    <img src={{row.image_url}} alt="Some awesome text"/>
                 </div>
-            </td>
-
-            <td>
-                <div><a href={{image.article_url}} target="_blank">
-                    <strong>
-                        {{image.article_url}}</strong>
-                </a>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <strong> {{image.image_caption}}</strong>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <a href={{image.image_url}} target="_blank">
-                        <img ng-src={{image.image_url}} alt="Description" height="42"
-                             width="42" target="_blank"/>
-                    </a>
-                </div>
-            </td>
 
 
-            <!--   <td>{{customer.activeSites}}</td>-->
+            </td>
+            <td>{{row.article_url}}</td>
+            <td>{{row.image_caption}}</td>
 
 
         </tr>
 
-
+        </tr>
         </tbody>
-    </div>
-</table>
+        <tfoot>
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="70"></div>
+            </td>
+        </tr>
 
+
+        </tfoot>
+    </table>
+</div>
 <p class="alert alert-info" ng-if="images.length == 0">
     No images found for this Search.
 </p>

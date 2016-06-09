@@ -10,13 +10,26 @@ exampleApp.controller('search_imagesController', function ($rootScope, $scope, $
         'caption': '', 'date_from': '', 'date_to': ''
     };
 
+    var loadingDatas = function () {
+        bootbox.dialog({
+                message: '<span class="fa fa-cog fa-spin fa-4x"></span>',
+                title: '<div ng-show="loading"> Retrieving Data... </div > '
+            }
+        );
+    };
+    var closeLoading = function () {
+        bootbox.hideAll();
+    };
+
+
     $scope.search_images = function (search) {
 
-
+        loadingDatas();
         $http.post('images/', search).success(function (data) {
+            closeLoading();
             $scope.images = data;
             $scope.rowCollection = data;
-            $scope.itemsByPage = 15;
+            $scope.itemsByPage = 10;
         }).error(function (data, status) {
             alert("Search error. Please try again or contact administrator.");
             return status;
