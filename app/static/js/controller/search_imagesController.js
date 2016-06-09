@@ -2,7 +2,7 @@
  * Created by lefevre on 07.09.2015.
  */
 
-exampleApp.controller('search_imagesController', function ($rootScope, $scope, $http) {
+exampleApp.controller('search_imagesController', function ($rootScope, $scope, $http, $route) {
     console.log("search_imagesController reporting for duty.");
 
 
@@ -25,11 +25,14 @@ exampleApp.controller('search_imagesController', function ($rootScope, $scope, $
     $scope.search_images = function (search) {
 
         loadingDatas();
+        $scope.rowCollection = [];
+
         $http.post('images/', search).success(function (data) {
             closeLoading();
 
             $scope.rowCollection = data.result;
             $scope.itemsByPage = 10;
+
         }).error(function (data, status) {
             alert("Search error. Please try again or contact administrator.");
             return status;
