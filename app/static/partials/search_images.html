@@ -54,7 +54,8 @@
                         ng-click="search_images(search)">Search
                 </button>
 
-                <div ng-if="rowCollection.length>0">Found : <strong>{{images.length}} </strong>matching pictures.</div>
+                <div ng-if="rowCollection.length>0">Found : <strong>{{rowCollection.length}} </strong>matching pictures.
+                </div>
 
             </div>
         </div>
@@ -73,7 +74,7 @@
     <table st-table="rowCollection" class="table table-striped">
         <thead>
         <tr>
-            <th st-sort="date">Date
+            <th st-sort="date"><i class="fa fa-sort" aria-hidden="true"></i>Date
             </th>
             <th st-sort="image_url">Pic</th>
             <th st-sort="article_url">Article</th>

@@ -27,8 +27,8 @@ exampleApp.controller('search_imagesController', function ($rootScope, $scope, $
         loadingDatas();
         $http.post('images/', search).success(function (data) {
             closeLoading();
-            $scope.images = data;
-            $scope.rowCollection = data;
+
+            $scope.rowCollection = data.result;
             $scope.itemsByPage = 10;
         }).error(function (data, status) {
             alert("Search error. Please try again or contact administrator.");

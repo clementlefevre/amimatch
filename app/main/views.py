@@ -1,7 +1,5 @@
-import json
-
 from flask import render_template, abort, request, \
-    current_app
+    current_app, jsonify
 from flask.ext.login import login_required
 from flask.ext.restful import Resource
 from flask.ext.sqlalchemy import get_debug_queries
@@ -48,9 +46,6 @@ def index():
     return render_template('index.html')
 
 
-
-
-
 @main.route('/images/', methods=['POST'])
 def get_images():
     if not request.json or 'caption' not in request.json:
@@ -63,7 +58,7 @@ def get_images():
 
     results = find_images(images_request)
 
-    return json.dumps(results), 200
+    return jsonify(result=results), 200
 
 
 @main.route('/search_images', methods=['GET', 'POST'])
