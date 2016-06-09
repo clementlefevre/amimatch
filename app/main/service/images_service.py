@@ -1,4 +1,5 @@
 import calendar
+import re
 
 from dateutil import parser
 
@@ -29,7 +30,7 @@ def find_images(form):
         func.lower(Image.image_caption).contains(caption.lower())).group_by(
         Image.image_hash).all()
 
-    result = [jsonify(image) for image in images]
+    result = [dictionify(image) for image in images]
 
     return result
 
@@ -39,11 +40,18 @@ def find_images_by_name(name):
         func.lower(Image.image_caption).contains(name.lower())).group_by(
         Image.image_hash).all()
 
-    result = [jsonify(image) for image in images]
+    result = [dictionify(image) for image in images]
 
     return result
 
 
-def jsonify(image):
+def dictionify(image):
     return dict(image_hash=image.image_hash, image_url=image.image_link, image_caption=image.image_caption,
-                date=calendar.timegm(image.articles.date.timetuple()) * 1000, article_url=image.articles.article_link)
+                date=calendar.timegm(image.articles.date.timetuple()) * 1000, article_url=image.articles.article_link,
+                article_title=strip_title(image.articles.article_link))
+
+
+def strip_title(url):
+    result = re.findall('/.*/(.*?)html', url)[0]
+    result = result.replace('-', ' ')
+    return result
