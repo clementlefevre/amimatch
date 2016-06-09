@@ -1,11 +1,9 @@
 from flask import render_template, abort, request, \
     current_app, jsonify
 from flask.ext.login import login_required
-from flask.ext.restful import Resource
 from flask.ext.sqlalchemy import get_debug_queries
 
 from . import main
-from app import api
 from app.main.forms import DateRangeForm
 from app.main.service.images_service import find_images
 from app.models import User
@@ -71,17 +69,3 @@ def search_images():
         return render_template('images.html', images=images)
 
     return render_template('search_images.html', form=form)
-
-
-class UserAPI(Resource):
-    def get(self, id):
-        pass
-
-    def put(self, id):
-        pass
-
-    def delete(self, id):
-        pass
-
-
-api.add_resource(UserAPI, '/users/<int:id>', endpoint='user')

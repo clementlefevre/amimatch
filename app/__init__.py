@@ -5,7 +5,7 @@ from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.pagedown import PageDown
-from flask.ext.restful import Api, Resource
+
 from config import config
 
 bootstrap = Bootstrap()
